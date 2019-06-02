@@ -1,0 +1,209 @@
+<template>
+  <div class="app-container">
+    <div class="filter-container">
+      <el-input v-model="listQuery.busNo" placeholder="车牌" style="width: 100px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-select v-model="listQuery.busModel" placeholder="车型" style="width: 90px" class="filter-item" @change="handleFilter">
+        <el-option label="全部" value="" />
+        <el-option v-for="item in busModels" :key="item.key" :label="item.label" :value="item.key" />
+      </el-select>
+      <el-input v-model="listQuery.driver" placeholder="驾驶员" style="width: 100px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.tel" placeholder="驾驶员手机" style="width: 140px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+        查询
+      </el-button>
+      <router-link :to="'/bus/addBus/'">
+            <el-button type="primary">
+              添加
+            </el-button>
+          </router-link>
+      <el-button v-waves v-show="false" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
+        导出
+      </el-button>
+    </div>
+
+    <el-table
+      v-loading="listLoading"
+      :data="list"
+      element-loading-text="Loading"
+      border
+      fit
+      highlight-current-row
+    >
+      <el-table-column align="center" label="ID" width="95">
+        <template slot-scope="scope">
+          {{ scope.$index }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="车牌">
+        <template slot-scope="scope">
+          {{ scope.row.busNo }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="车型">
+        <template slot-scope="scope">
+          {{ scope.row.busModel }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="驾驶员">
+        <template slot-scope="scope">
+          {{ scope.row.driver }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="驾驶员手机">
+        <template slot-scope="scope">
+          {{ scope.row.tel }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="备注">
+        <template slot-scope="scope">
+          {{ scope.row.remark }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="添加人">
+        <template slot-scope="scope">
+          {{ scope.row.addName }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="添加时间">
+        <template slot-scope="scope">
+          {{ scope.row.addTime }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="修改人">
+        <template slot-scope="scope">
+          {{ scope.row.updateName }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" prop="created_at" label="修改时间">
+        <template slot-scope="scope">
+          <i class="el-icon-time" />
+          <span>{{ scope.row.updateTime }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="操作" width="210" class-name="small-padding fixed-width">
+        <template slot-scope="scope">
+          <router-link v-show="!isSelect" :to="'/bus/editBus/'+scope.row.busId">
+            <el-button type="primary" size="mini">
+              编辑
+            </el-button>
+          </router-link>
+          <el-button v-show="!isSelect" type="info" size="mini" @click="handleCharge(scope.row.busId)" >
+              费用
+          </el-button>
+          <el-button v-show="!isSelect" type="danger" size="mini" @click="handlerDelete(scope.row.busId)" >
+              删除
+          </el-button>
+          <el-button v-show="isSelect" type="danger" size="mini" @click="handlerSelect(scope.row)" >
+              选择
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="fetchData" />
+    
+    <el-dialog
+      title="添加车辆费用"
+      :visible.sync="dialogVisible"
+      width="50%"
+      :before-close="handleClose">
+      <cost-form :bus-id="busId" />
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">关 闭</el-button>
+      </span>
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+import { getList, deleteBus } from '@/api/bus/table'
+import Pagination from '@/components/Pagination'
+import waves from '@/directive/waves'
+import CostForm from '@/views/cost/components/CostForm'
+
+export default {
+  name: 'BusTable',
+  components: { Pagination,CostForm },
+  directives: { waves },
+  props: {
+      isSelect: {
+        type: Boolean,
+        default: false
+      }
+  },
+  filters: {
+    statusFilter(status) {
+      const statusMap = {
+        published: 'success',
+        draft: 'gray',
+        deleted: 'danger'
+      }
+      return statusMap[status]
+    }
+  },
+  data() {
+    return {
+      list: null,
+      listLoading: true,
+      total: 0,
+      listQuery: {
+        page: 1,
+        limit: 4,
+        busNo: '',
+        busModel: ''
+      },
+      busModels: [{ label: '33座', key: '33' }, { label: '45座', key: '45' }, { label: '55座', key: '55' }, { label: '57座', key: '57' }, { label: '65座', key: '65' }, { label: '7座', key: '7' }, { label: '18座', key: '18' }, { label: '38座', key: '38' }],
+      driver: '',
+      tel: '',
+      dialogVisible: false,
+      busId: ''
+    }
+  },
+  created() {
+    this.fetchData()
+  },
+  methods: {
+    fetchData() {
+      this.listLoading = true
+      getList(this.listQuery).then(response => {
+        this.list = response.data.items
+        this.listLoading = false
+        this.total = response.data.total
+      })
+    },
+    handleFilter() {
+      this.listQuery.page = 1
+      this.fetchData()
+    },
+    handleDownload() {
+      this.$message({
+          message: '暂时还不提供下载功能',
+          type: 'warning'
+        });
+    },
+    handlerDelete(busId) {
+      deleteBus(busId).then(() => {
+        this.$message({
+          message: '删除成功',
+          type: 'success'
+        })
+      })
+      this.handleFilter()
+    },
+    handlerSelect(row) {
+      this.$emit('useBus', row)
+    },
+    handleCharge(busId){
+      this.dialogVisible = true
+      this.busId = busId
+    },
+    handleClose(done) {
+      this.$confirm('确认关闭？')
+        .then(_ => {
+          done()
+        })
+        .catch(_ => {})
+    }
+  }
+}
+</script>

@@ -46,121 +46,84 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/bus/table',
     children: [{
       path: 'dashboard',
-      name: 'Dashboard',
+      name: 'dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '首页', icon: 'dashboard' }
     }]
   },
 
   {
-    path: '/example',
+    path: '/bus',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
+    redirect: '/bus/table',
+    name: '车辆管理',
+    meta: { title: '车辆管理' },
     children: [
       {
-        path: 'usebus',
-        name: '用车',
-        component: () => import('@/views/usebus/index'),
-        meta: { title: '用车', icon: 'table' }
+        path: 'addBus',
+        name: '添加车辆',
+        component: () => import('@/views/bus/addBus'),
+        meta: { title: '添加车辆', icon: 'form' }
+      },
+      {
+        path: 'editBus/:busId(\\d+)',
+        name: '编辑车辆',
+        component: () => import('@/views/bus/editBus'),
+        meta: { title: '编辑车辆', icon: 'form' },
+        hidden: true
       },
       {
         path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        name: '车辆列表',
+        component: () => import('@/views/bus/table'),
+        meta: { title: '车辆列表', icon: 'table' }
+      }
+    ]
+  },
+
+  {
+    path: '/order',
+    component: Layout,
+    redirect: '/order/table',
+    name: '用车管理',
+    meta: { title: '用车管理' },
+    children: [
+      {
+        path: 'addOrder',
+        name: '用车',
+        component: () => import('@/views/order/addOrder'),
+        meta: { title: '用车', icon: 'form' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
-  },
-
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
-  },
-
-  {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
+        path: 'editOrder/:ordId(\\d+)',
+        name: '编辑用车',
+        component: () => import('@/views/order/editOrder'),
+        meta: { title: '编辑用车', icon: 'form' },
+        hidden: true
       },
       {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        meta: { title: 'menu2' }
+        path: 'table',
+        name: '用车列表',
+        component: () => import('@/views/order/table'),
+        meta: { title: '用车列表', icon: 'table' }
       }
     ]
   },
-
   {
-    path: 'external-link',
+    path: '/cost',
     component: Layout,
+    redirect: '/cost/table',
+    name: '费用管理',
+    meta: { title: '费用管理' },
     children: [
       {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
+        path: 'table',
+        name: '费用列表',
+        component: () => import('@/views/cost/table'),
+        meta: { title: '费用列表', icon: 'table' }
       }
     ]
   },

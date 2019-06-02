@@ -21,7 +21,7 @@ module.exports = {
   publicPath: '/',
   outputDir: 'dist',
   assetsDir: 'static',
-  lintOnSave: process.env.NODE_ENV === 'development',
+  lintOnSave: process.env.c === 'development',
   productionSourceMap: false,
   devServer: {
     port: port,
@@ -30,7 +30,7 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    proxy: 'http://localhost:8080'
+    proxy: 'http://localhost:8089'
     // proxy: {
     //   // change xxx-api/login => mock/login
     //   // detail: https://cli.vuejs.org/config/#devserver-proxy

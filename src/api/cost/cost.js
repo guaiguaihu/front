@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function submitUsebus(data) {
+export function submitAddCost(data) {
   return request({
-    url: '/usebus',
+    url: '/cost',
     method: 'post',
     data
   })
