@@ -25,6 +25,26 @@
       fit
       highlight-current-row
     >
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <el-form label-position="center" inline class="demo-table-expand">
+              <el-table
+                :data="props.row.busList"
+                style="width: 100%">
+                  <el-table-column align="center" label="车辆ID" width="80">
+                    <template slot-scope="scope">
+                      {{ scope.row.busId }}
+                    </template>
+                  </el-table-column>
+                  <el-table-column align="center" label="车牌" width="80">
+                    <template slot-scope="scope">
+                      {{ scope.row.busNo }}
+                    </template>
+                  </el-table-column>
+                </el-table>
+          </el-form>
+        </template>
+      </el-table-column>
       <el-table-column align="center" label="ID" width="95">
         <template slot-scope="scope">
           {{ scope.$index }}
@@ -42,7 +62,7 @@
       </el-table-column>
       <el-table-column align="center" label="用车开始时间">
         <template slot-scope="scope">
-          {{ scope.row.useBusStartTime }}
+          <span>{{ scope.row.useBusStartTime  | parseDate('{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="合同编号">
@@ -55,7 +75,7 @@
           {{ scope.row.busNo }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="添加人">
+      <!-- <el-table-column align="center" label="添加人">
         <template slot-scope="scope">
           {{ scope.row.addName }}
         </template>
@@ -75,7 +95,7 @@
           <i class="el-icon-time" />
           <span>{{ scope.row.updateTime }}</span>
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
       <el-table-column align="center" label="操作" width="150" class-name="small-padding fixed-width">
         <template slot-scope="scope">

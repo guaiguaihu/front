@@ -59,7 +59,7 @@
           {{ scope.row.remark }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="添加人">
+      <!-- <el-table-column align="center" label="添加人">
         <template slot-scope="scope">
           {{ scope.row.addName }}
         </template>
@@ -79,7 +79,7 @@
           <i class="el-icon-time" />
           <span>{{ scope.row.updateTime }}</span>
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
       <el-table-column align="center" label="操作" width="210" class-name="small-padding fixed-width">
         <template slot-scope="scope">
