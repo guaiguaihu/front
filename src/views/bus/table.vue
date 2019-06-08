@@ -88,8 +88,8 @@
               编辑
             </el-button>
           </router-link>
-          <el-button v-show="!isSelect" type="info" size="mini" @click="handleCharge(scope.row.busId)" >
-              费用
+          <el-button v-show="!isSelect" type="primary" size="mini" @click="handleCharge(scope.row.busId)" >
+              记费
           </el-button>
           <el-button v-show="!isSelect" type="danger" size="mini" @click="handlerDelete(scope.row.busId)" >
               删除
@@ -103,11 +103,11 @@
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="fetchData" />
     
     <el-dialog
-      title="添加车辆费用"
+      title="添加【车辆】费用"
       :visible.sync="dialogVisible"
       width="50%"
       :before-close="handleClose">
-      <cost-form :bus-id="busId" />
+      <cost-form :bus-id="busId" :model="bus" />
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">关 闭</el-button>
       </span>
@@ -198,11 +198,7 @@ export default {
       this.busId = busId
     },
     handleClose(done) {
-      this.$confirm('确认关闭？')
-        .then(_ => {
-          done()
-        })
-        .catch(_ => {})
+      done()
     }
   }
 }

@@ -44,28 +44,6 @@
           {{ scope.row.remark }}
         </template>
       </el-table-column>
-      <!-- <el-table-column align="center" label="添加人">
-        <template slot-scope="scope">
-          {{ scope.row.addName }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="添加时间">
-        <template slot-scope="scope">
-          {{ scope.row.addTime }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="修改人">
-        <template slot-scope="scope">
-          {{ scope.row.updateName }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" prop="created_at" label="修改时间">
-        <template slot-scope="scope">
-          <i class="el-icon-time" />
-          <span>{{ scope.row.updateTime }}</span>
-        </template>
-      </el-table-column> -->
-
       <el-table-column align="center" label="操作" width="150" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="danger" size="mini" @click="handlerDelete(scope.row.costId)" >
