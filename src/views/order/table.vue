@@ -86,12 +86,12 @@
       </el-table-column>
       <el-table-column align="center" label="用车开始时间">
         <template slot-scope="scope">
-          <span>{{ scope.row.useBusStartTime  | parseDate('{y}-{m}-{d}') }}</span>
+          <span>{{ scope.row.useBusStartTime }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="用车结束时间">
         <template slot-scope="scope">
-          <span>{{ scope.row.useBusEndTime  | parseDate('{y}-{m}-{d}') }}</span>
+          <span>{{ scope.row.useBusEndTime }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="行程">

@@ -31,12 +31,27 @@
       </el-table-column>
       <el-table-column align="center" label="费用">
         <template slot-scope="scope">
-          {{ scope.row.costName }}
+          <el-tag>{{ scope.row.costName | costNameTypeFilter }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column align="center" label="金额">
         <template slot-scope="scope">
           {{ scope.row.costAmount }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="车牌">
+        <template slot-scope="scope">
+          {{ scope.row.busDomain.busNo }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="用车开始时间">
+        <template slot-scope="scope">
+          {{ scope.row.useBusStartTime }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="用车结束时间">
+        <template slot-scope="scope">
+          {{ scope.row.useBusStartTime }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="备注">
@@ -61,6 +76,17 @@
 import { getList, deleteCost } from '@/api/cost/table'
 import Pagination from '@/components/Pagination'
 import waves from '@/directive/waves'
+const costNames = [{ label:'过路费', key:'1' },
+                    { label:'停车费', key:'2' },
+                    { label:'住宿费', key:'3' },
+                    { label:'餐费', key:'4' },
+                    { label:'修理', key:'5' },
+                    { label:'罚款', key:'6' }]
+
+const coatNameTypeKeyValue = costNames.reduce((acc, cur) => {
+  acc[cur.key] = cur.label
+  return acc
+}, {})
 
 export default {
   name: 'CostTable',
@@ -74,6 +100,9 @@ export default {
         deleted: 'danger'
       }
       return statusMap[status]
+    },
+    costNameTypeFilter(key){
+      return coatNameTypeKeyValue[key]
     }
   },
   data() {
@@ -86,7 +115,8 @@ export default {
         limit: 4,
         costName: '',
         costAmount: ''
-      }
+      },
+      costNames
     }
   },
   created() {
