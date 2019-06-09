@@ -41,12 +41,12 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="用车开始时间">
-                <el-date-picker v-model="form.useBusStartTime" type="date" placeholder="请选择用车开始时间" />
+                <el-date-picker v-model="form.useBusStartTime" type="date" value-format="yyyy-MM-dd" placeholder="请选择用车开始时间" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="用车结束时间">
-                <el-date-picker v-model="form.useBusEndTime" type="date" placeholder="请选择用车结束时间" />
+                <el-date-picker v-model="form.useBusEndTime" type="date" value-format="yyyy-MM-dd" placeholder="请选择用车结束时间" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -82,7 +82,7 @@
         :visible.sync="dialogVisible"
         width="80%"
         :before-close="handleClose">
-        <bus-table @useBus='useBus' :is-select="true" />
+        <bus-table @useBus='useBus' :is-select="true" :use-bus-start-time="form.useBusStartTime" :use-bus-end-time="form.useBusEndTime" />
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">关 闭</el-button>
         </span>
@@ -94,16 +94,11 @@
           <el-button style="float: right; padding: 3px 0" type="text" @click="dialogVisible = true" >选择车辆</el-button>
         </div>
         <el-table :data="form.busList" style="width: 100%" border fit highlight-current-row>
-          <el-table-column prop="busId" label="车牌" width="100" />
+          <el-table-column prop="busNo" label="车牌" width="100" />
           <el-table-column prop="busModel" label="车型" width="100" />
           <el-table-column prop="driver" label="驾驶员" width="100s" />
           <el-table-column prop="tel" label="驾驶员手机" width="180" />
           <el-table-column prop="remark" label="备注" width="400" />
-          <!-- <el-table-column prop="route" label="行程" width="180" > -->
-            <!-- <template slot-scope="scope">
-              <el-input v-model="scope.row.route" size="small" placeholder="请输入车辆行程" />
-            </template>
-          </el-table-column> -->
           <el-table-column align="center" label="操作" width="150" class-name="small-padding fixed-width">
             <template slot-scope="scope">
               <el-button type="danger" size="mini" @click="handlerDeleteBusFromList(scope.$index)" >
@@ -253,9 +248,7 @@ export default {
       this.dialogVisible = false
       const id = this.$route.params && this.$route.params.ordId
       bus.ordId = id
-      // this.$set(bus, "route", "")
       this.$set(this.form.busList, busSize, bus)
-      console.log(this.form.busList[0])
     },
     handlerDeleteBusFromList(index) {
       this.$delete(this.form.busList, index)

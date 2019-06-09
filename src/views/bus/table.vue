@@ -59,28 +59,6 @@
           {{ scope.row.remark }}
         </template>
       </el-table-column>
-      <!-- <el-table-column align="center" label="添加人">
-        <template slot-scope="scope">
-          {{ scope.row.addName }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="添加时间">
-        <template slot-scope="scope">
-          {{ scope.row.addTime }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="修改人">
-        <template slot-scope="scope">
-          {{ scope.row.updateName }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" prop="created_at" label="修改时间">
-        <template slot-scope="scope">
-          <i class="el-icon-time" />
-          <span>{{ scope.row.updateTime }}</span>
-        </template>
-      </el-table-column> -->
-
       <el-table-column align="center" label="操作" width="210" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <router-link v-show="!isSelect" :to="'/bus/editBus/'+scope.row.busId">
@@ -107,7 +85,7 @@
       :visible.sync="dialogVisible"
       width="50%"
       :before-close="handleClose">
-      <cost-form :bus-id="busId" :model="bus" />
+      <cost-form :bus-id="busId" :model="costModel" />
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">关 闭</el-button>
       </span>
@@ -129,6 +107,14 @@ export default {
       isSelect: {
         type: Boolean,
         default: false
+      },
+      useBusStartTime:{
+        type: String,
+        default: ''
+      },
+      useBusEndTime:{
+        type: String,
+        default: ''
       }
   },
   filters: {
@@ -150,13 +136,16 @@ export default {
         page: 1,
         limit: 4,
         busNo: '',
-        busModel: ''
+        busModel: '',
+        useBusStartTime: this.useBusStartTime,
+        useBusEndTime: this.useBusEndTime 
       },
       busModels: [{ label: '33座', key: '33' }, { label: '45座', key: '45' }, { label: '55座', key: '55' }, { label: '57座', key: '57' }, { label: '65座', key: '65' }, { label: '7座', key: '7' }, { label: '18座', key: '18' }, { label: '38座', key: '38' }],
       driver: '',
       tel: '',
       dialogVisible: false,
-      busId: ''
+      busId: '',
+      costModel: 'bus'
     }
   },
   created() {
