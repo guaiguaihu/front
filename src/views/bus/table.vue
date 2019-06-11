@@ -72,7 +72,7 @@
           <el-button v-show="!isSelect" type="danger" size="mini" @click="handlerDelete(scope.row.busId)" >
               删除
           </el-button>
-          <el-button v-show="isSelect" type="danger" size="mini" @click="handlerSelect(scope.row)" >
+          <el-button v-show="isSelect" type="danger" size="mini" @click="handlerSelect(scope.row, scope.$index)" >
               选择
           </el-button>
         </template>
@@ -115,6 +115,10 @@ export default {
       useBusEndTime:{
         type: String,
         default: ''
+      },
+      showBusDialog: {
+        type: Array,
+        default: null
       }
   },
   filters: {
@@ -158,6 +162,7 @@ export default {
         this.list = response.data.items
         this.listLoading = false
         this.total = response.data.total
+      console.log(this.list)
       })
     },
     handleFilter() {
@@ -179,7 +184,8 @@ export default {
       })
       this.handleFilter()
     },
-    handlerSelect(row) {
+    handlerSelect(row, index) {
+      this.$delete(this.list, index)
       this.$emit('useBus', row)
     },
     handleCharge(busId){
@@ -188,6 +194,11 @@ export default {
     },
     handleClose(done) {
       done()
+    }
+  },
+  watch: {
+    showBusDialog: function (newQuestion, oldQuestion) {
+      console.log('22222222222222222222')
     }
   }
 }

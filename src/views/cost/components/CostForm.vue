@@ -25,7 +25,7 @@
       </el-form-item>
       <el-form-item v-show="false" label="实驶公里">
         <el-col :span="16">
-          <span>{{dravelKm}}</span>
+          <span></span>
         </el-col>
       </el-form-item>
       <el-form-item label="备注">

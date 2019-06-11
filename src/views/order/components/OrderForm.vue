@@ -82,7 +82,7 @@
         :visible.sync="dialogVisible"
         width="80%"
         :before-close="handleClose">
-        <bus-table @useBus='useBus' :is-select="true" :use-bus-start-time="form.useBusStartTime" :use-bus-end-time="form.useBusEndTime" />
+        <bus-table @useBus='useBus' :is-select="true" :show-bus-dialog="form.busList" :use-bus-start-time="form.useBusStartTime" :use-bus-end-time="form.useBusEndTime" />
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">关 闭</el-button>
         </span>
@@ -207,6 +207,7 @@ export default {
               type: 'success',
               duration: 2000
             })
+            this.form.busList = []
           })
           this.loading = false
         } else {
@@ -244,6 +245,17 @@ export default {
       done()
     },
     useBus(bus) {
+      var existsInBusList = false
+      this.form.busList.forEach((v, i) => {
+        if(bus.busNo == v.busNo){
+          existsInBusList = true
+          return true
+        }
+      })
+
+      if(existsInBusList){
+        return
+      }
       const busSize = Object.keys(this.form.busList).length
       this.dialogVisible = false
       const id = this.$route.params && this.$route.params.ordId
