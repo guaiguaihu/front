@@ -36,6 +36,11 @@
       </el-table-column>
       <el-table-column align="center" label="车牌">
         <template slot-scope="scope">
+          <el-tag>{{ scope.row.status }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="车牌">
+        <template slot-scope="scope">
           {{ scope.row.busNo }}
         </template>
       </el-table-column>
