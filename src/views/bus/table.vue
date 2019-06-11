@@ -197,8 +197,15 @@ export default {
     }
   },
   watch: {
-    showBusDialog: function (newQuestion, oldQuestion) {
-      console.log('22222222222222222222')
+    useBusStartTime: function (newStartTime, oldQuestion) {
+      this.listQuery.useBusStartTime = newStartTime
+      this.listQuery.useBusEndTime = this.useBusEndTime
+      this.fetchData()
+    },
+    useBusEndTime: function (newEndTime, oldQuestion) {
+      this.listQuery.useBusStartTime = this.useBusStartTime
+      this.listQuery.useBusEndTime = newEndTime
+      this.fetchData()
     }
   }
 }
