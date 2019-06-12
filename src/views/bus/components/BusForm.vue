@@ -7,10 +7,10 @@
         </el-col>
       </el-form-item>
       <el-form-item label="车型">
-        <el-col :span="8">
-          <el-select v-model="form.busModel" placeholder="请选择车型">
-            <el-option v-for="item in busModels" :key="item.key" :label="item.label" :value="item.key" />
-          </el-select>
+        <el-col :span="3">
+          <el-input v-model="form.busModel">
+            <template slot="append">座</template>
+          </el-input>
         </el-col>
       </el-form-item>
       <el-form-item label="驾驶员">

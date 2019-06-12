@@ -26,7 +26,7 @@
     >
       <el-table-column align="center" label="ID" width="95">
         <template slot-scope="scope">
-          {{ scope.$index }}
+          {{ scope.$index +1 }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="费用">
@@ -51,7 +51,7 @@
       </el-table-column>
       <el-table-column align="center" label="用车结束时间">
         <template slot-scope="scope">
-          {{ scope.row.useBusStartTime | parseDate('{y}-{m}-{d}') }}
+          {{ scope.row.useBusEndTime | parseDate('{y}-{m}-{d}') }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="备注">
@@ -112,7 +112,7 @@ export default {
       total: 0,
       listQuery: {
         page: 1,
-        limit: 4,
+        limit: 50,
         costName: '',
         costAmount: ''
       },

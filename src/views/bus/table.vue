@@ -31,10 +31,10 @@
     >
       <el-table-column align="center" label="ID" width="95">
         <template slot-scope="scope">
-          {{ scope.$index }}
+          {{ scope.$index + 1 }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="车牌">
+      <el-table-column align="center" label="状态">
         <template slot-scope="scope">
           <el-tag>{{ scope.row.status }}</el-tag>
         </template>
@@ -143,7 +143,7 @@ export default {
       total: 0,
       listQuery: {
         page: 1,
-        limit: 4,
+        limit: 50,
         busNo: '',
         busModel: '',
         useBusStartTime: this.useBusStartTime,
