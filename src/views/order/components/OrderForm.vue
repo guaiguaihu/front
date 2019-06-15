@@ -41,12 +41,12 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="用车开始时间">
-                <el-date-picker v-model="form.useBusStartTime" type="date" value-format="yyyy-MM-dd" placeholder="请选择用车开始时间" />
+                <el-date-picker v-model="form.useBusStartTime" type="datetime" value-format="yyyy-MM-dd hh:mm:ss" default-time="12:00:00" placeholder="请选择用车开始时间" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="用车结束时间">
-                <el-date-picker v-model="form.useBusEndTime" type="date" value-format="yyyy-MM-dd" placeholder="请选择用车结束时间" />
+                <el-date-picker v-model="form.useBusEndTime" type="datetime" value-format="yyyy-MM-dd hh:mm:ss" default-time="12:00:00" placeholder="请选择用车结束时间" />
             </el-form-item>
           </el-col>
         </el-row>

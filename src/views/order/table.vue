@@ -106,7 +106,7 @@
               编辑
             </el-button>
           </router-link>
-          <el-button v-show="false" type="danger" size="mini" @click="handlerDelete(scope.row.ordId)" >
+          <el-button type="danger" size="mini" @click="handlerDelete(scope.row.ordId)" >
               删除
           </el-button>
         </template>
