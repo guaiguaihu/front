@@ -69,11 +69,6 @@
           </el-form>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="ID" width="95">
-        <template slot-scope="scope">
-          {{ scope.$index + 1 }}
-        </template>
-      </el-table-column>
       <el-table-column align="center" label="用车单位">
         <template slot-scope="scope">
           {{ scope.row.useBusCom }}

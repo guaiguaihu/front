@@ -24,11 +24,6 @@
       fit
       highlight-current-row
     >
-      <el-table-column align="center" label="ID" width="95">
-        <template slot-scope="scope">
-          {{ scope.$index +1 }}
-        </template>
-      </el-table-column>
       <el-table-column align="center" label="费用">
         <template slot-scope="scope">
           <el-tag>{{ scope.row.costName | costNameTypeFilter }}</el-tag>
