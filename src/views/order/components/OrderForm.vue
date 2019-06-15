@@ -176,7 +176,7 @@ export default {
         busRequireId: '',
         addrGetOn: '',
         addrGetOff: '',
-        payType: '2',
+        payType: '1',
         remark: '',
         useBusCom: '',
         useBusContact: '',
