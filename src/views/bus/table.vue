@@ -2,10 +2,7 @@
   <div class="app-container">
     <div class="filter-container">
       <el-input v-model="listQuery.busNo" placeholder="车牌" style="width: 100px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-select v-model="listQuery.busModel" placeholder="车型" style="width: 90px" class="filter-item" @change="handleFilter">
-        <el-option label="全部" value="" />
-        <el-option v-for="item in busModels" :key="item.key" :label="item.label" :value="item.key" />
-      </el-select>
+      <el-input v-model="listQuery.busModel" placeholder="车型" style="width: 80px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-input v-model="listQuery.driver" placeholder="驾驶员" style="width: 100px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-input v-model="listQuery.tel" placeholder="驾驶员手机" style="width: 140px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
@@ -149,7 +146,6 @@ export default {
         useBusStartTime: this.useBusStartTime,
         useBusEndTime: this.useBusEndTime 
       },
-      busModels: [{ label: '33座', key: '33' }, { label: '45座', key: '45' }, { label: '55座', key: '55' }, { label: '57座', key: '57' }, { label: '65座', key: '65' }, { label: '7座', key: '7' }, { label: '18座', key: '18' }, { label: '38座', key: '38' }],
       driver: '',
       tel: '',
       dialogVisible: false,
