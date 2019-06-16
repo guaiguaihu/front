@@ -4,8 +4,8 @@
       <el-input v-model="listQuery.useBusCom" placeholder="用车单位" style="width: 100px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-input v-model="listQuery.useBusContact" placeholder="用车单位联系人" style="width: 150px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-input v-model="listQuery.route" placeholder="行程" style="width: 150px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-date-picker type="date" v-model="listQuery.useBusStartTime" value-format="yyyy-MM-dd"  placeholder="用车开始时间" style="width: 150px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-date-picker type="date" v-model="listQuery.useBusEndTime" value-format="yyyy-MM-dd" placeholder="用车结束时间" style="width: 150px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-date-picker type="datetime" v-model="listQuery.useBusStartTime" value-format="yyyy-MM-dd hh:mm:ss"  placeholder="用车开始时间" style="width: 150px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-date-picker type="datetime" v-model="listQuery.useBusEndTime" value-format="yyyy-MM-dd hh:mm:ss" placeholder="用车结束时间" style="width: 150px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         查询
       </el-button>
@@ -81,12 +81,12 @@
       </el-table-column>
       <el-table-column align="center" label="用车开始时间">
         <template slot-scope="scope">
-          <span>{{ scope.row.useBusStartTime | parseDate('{y}-{m}-{d}') }}</span>
+          <span>{{ scope.row.useBusStartTime | parseDate('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="用车结束时间">
         <template slot-scope="scope">
-          <span>{{ scope.row.useBusEndTime | parseDate('{y}-{m}-{d}') }}</span>
+          <span>{{ scope.row.useBusEndTime | parseDate('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="行程">
