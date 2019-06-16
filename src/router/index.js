@@ -46,7 +46,7 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/bus/table',
+    redirect: '/order/table',
     children: [{
       path: 'dashboard',
       name: 'dashboard',
@@ -66,7 +66,8 @@ export const constantRoutes = [
         path: 'addBus',
         name: '添加车辆',
         component: () => import('@/views/bus/addBus'),
-        meta: { title: '添加车辆', icon: 'form' }
+        meta: { title: '添加车辆', icon: 'form' },
+        hidden: true
       },
       {
         path: 'editBus/:busId(\\d+)',
@@ -77,9 +78,9 @@ export const constantRoutes = [
       },
       {
         path: 'table',
-        name: '车辆列表',
+        name: '车辆管理',
         component: () => import('@/views/bus/table'),
-        meta: { title: '车辆列表', icon: 'table' }
+        meta: { title: '车辆管理', icon: 'table' }
       }
     ]
   },
@@ -95,7 +96,8 @@ export const constantRoutes = [
         path: 'addOrder',
         name: '用车',
         component: () => import('@/views/order/addOrder'),
-        meta: { title: '用车', icon: 'form' }
+        meta: { title: '用车', icon: 'form' },
+        hidden: true
       },
       {
         path: 'editOrder/:ordId(\\d+)',
@@ -106,9 +108,9 @@ export const constantRoutes = [
       },
       {
         path: 'table',
-        name: '用车列表',
+        name: '订单管理',
         component: () => import('@/views/order/table'),
-        meta: { title: '用车列表', icon: 'table' }
+        meta: { title: '订单管理', icon: 'table' }
       }
     ]
   },
@@ -121,9 +123,9 @@ export const constantRoutes = [
     children: [
       {
         path: 'table',
-        name: '费用列表',
+        name: '费用管理',
         component: () => import('@/views/cost/table'),
-        meta: { title: '费用列表', icon: 'table' }
+        meta: { title: '费用管理', icon: 'table' }
       }
     ]
   },
