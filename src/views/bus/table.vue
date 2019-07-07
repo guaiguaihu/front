@@ -56,6 +56,11 @@
           {{ scope.row.tel }}
         </template>
       </el-table-column>
+      <el-table-column align="center" label="车辆来源">
+        <template slot-scope="scope">
+          {{ scope.row.busSource | busSourceFilter}}
+        </template>
+      </el-table-column>
       <el-table-column align="center" label="备注">
         <template slot-scope="scope">
           {{ scope.row.remark }}
@@ -100,6 +105,13 @@ import { getList, deleteBus } from '@/api/bus/table'
 import Pagination from '@/components/Pagination'
 import waves from '@/directive/waves'
 import CostForm from '@/views/cost/components/CostForm'
+const costNames = [{ label:'普通', key:'1' },
+                    { label:'外调', key:'2' }]
+
+const coatNameTypeKeyValue = costNames.reduce((acc, cur) => {
+  acc[cur.key] = cur.label
+  return acc
+}, {})
 
 export default {
   name: 'BusTable',
@@ -131,6 +143,9 @@ export default {
         deleted: 'danger'
       }
       return statusMap[status]
+    },
+    busSourceFilter(key) {
+      return coatNameTypeKeyValue[key]
     }
   },
   data() {
@@ -144,7 +159,7 @@ export default {
         busNo: '',
         busModel: '',
         useBusStartTime: this.useBusStartTime,
-        useBusEndTime: this.useBusEndTime 
+        useBusEndTime: this.useBusEndTime
       },
       driver: '',
       tel: '',

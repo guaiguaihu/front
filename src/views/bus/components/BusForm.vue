@@ -23,6 +23,13 @@
           <el-input v-model="form.tel" />
         </el-col>
       </el-form-item>
+      <el-form-item label="用车来源">
+        <el-col :span="8">
+          <el-select v-model="form.busSource">
+            <el-option v-for="item in busSources" :key="item.key" :label="item.label" :value="item.key" />
+          </el-select>
+        </el-col>
+      </el-form-item>
       <el-form-item label="备注">
         <el-col :span="8">
           <el-input v-model="form.remark" type="textarea" />
@@ -56,9 +63,11 @@ export default {
         busModel: '',
         driver: '',
         tel: '',
-        remark: ''
+        remark: '',
+        busSource: ''
       },
-      busModels: [{ label: '33座', key: '33' }, { label: '45座', key: '45' }, { label: '55座', key: '55' }, { label: '57座', key: '57' }, { label: '65座', key: '65' }, { label: '7座', key: '7' }, { label: '18座', key: '18' }, { label: '38座', key: '38' }]
+      busModels: [{ label: '33座', key: '33' }, { label: '45座', key: '45' }, { label: '55座', key: '55' }, { label: '57座', key: '57' }, { label: '65座', key: '65' }, { label: '7座', key: '7' }, { label: '18座', key: '18' }, { label: '38座', key: '38' }],
+      busSources:[{ label: '普通', key: '1' }, { label: '外调', key: '2' }]
     }
   },
   created() {

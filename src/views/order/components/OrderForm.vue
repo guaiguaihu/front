@@ -95,7 +95,7 @@
         :visible.sync="dialogVisible"
         width="80%"
         :before-close="handleClose">
-        <bus-table @useBus='useBus' :is-select="true" :show-bus-dialog="form.busList" :use-bus-start-time="form.useBusStartTime" :use-bus-end-time="form.useBusEndTime" />
+        <bus-table @useBus='useBus' :is-select="true" :show-bus-dialog="form.busList" :use-bus-start-time="selectStartTime" :use-bus-end-time="selectEndTime" />
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">关 闭</el-button>
         </span>
@@ -202,7 +202,9 @@ export default {
       },
       ordTypes:[{ label: '普通', key: '1' }, { label: '外调', key: '2' }],
       payTypes:[{ label: '挂账', key: '1' }, { label: '现金', key: '2' }],
-      dialogVisible: false
+      dialogVisible: false,
+      selectStartTime: '',
+      selectEndTime: ''
     }
   },
   created() {
@@ -222,12 +224,34 @@ export default {
           }
         })
         this.$set(this.form, 'contractAmount', total)
+
+        // changeSelectTime(form)
+        this.selectStartTime = ''
+        if(val.useBusStartDate){
+          this.selectStartTime = val.useBusStartDate
+        }
+        if(val.useBusStartTime){
+          this.selectStartTime += ' ' + val.useBusStartTime
+        }
+        this.selectEndTime = ''
+        if(val.useBusEndDate){
+          this.selectEndTime = val.useBusEndDate
+        }
+        if(val.useBusEndTime){
+          this.selectEndTime += ' ' + val.useBusEndTime
+        }
+        console.log('this.selectStartTime:' + this.selectStartTime)
+        console.log('this.selectEndTime:' + this.selectEndTime)
       },
       deep: true,
       immediate: true
     }
   },
   methods: {
+    changeSelectTime(form){
+      this.selectStartTime = useBusStartDate + ' ' +  useBusStartTime
+      this.selectEndTime = useBusEndDate + ' ' + useBusEndTime
+    },
     onSubmit(){
       if (this.isEdit) {
         this.onSubmitEditOrder()
