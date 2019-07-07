@@ -30,7 +30,7 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    proxy: 'http://localhost:8089'
+    proxy: 'https://localhost:8089'
     // proxy: {
     //   // change xxx-api/login => mock/login
     //   // detail: https://cli.vuejs.org/config/#devserver-proxy

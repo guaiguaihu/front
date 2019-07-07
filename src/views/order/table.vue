@@ -1,17 +1,20 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
+      <el-select v-model="listQuery.status" clearable placeholder="状态" style="width:80px;" class="filter-item" @keyup.enter.native="handleFilter">
+        <el-option v-for="item in statusList" :key="item.label" :value="item.label" />
+      </el-select>
       <el-input v-model="listQuery.useBusCom" placeholder="用车单位" style="width: 100px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-input v-model="listQuery.useBusContact" placeholder="用车单位联系人" style="width: 150px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-input v-model="listQuery.route" placeholder="行程" style="width: 150px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-date-picker type="datetime" v-model="listQuery.useBusStartTime" value-format="yyyy-MM-dd hh:mm:ss"  placeholder="用车开始时间" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-date-picker type="datetime" v-model="listQuery.useBusEndTime" value-format="yyyy-MM-dd hh:mm:ss" placeholder="用车结束时间" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-date-picker type="datetime" v-model="listQuery.useBusStartTime" value-format="yyyy-MM-dd HH:mm:ss"  placeholder="开始时间" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-date-picker type="datetime" v-model="listQuery.useBusEndTime" value-format="yyyy-MM-dd HH:mm:ss" placeholder="结束时间" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         查询
       </el-button>
       <router-link :to="'/order/addOrder/'">
             <el-button type="primary">
-              添加
+              预定
             </el-button>
           </router-link>
       <el-button v-waves v-show="false" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
@@ -29,36 +32,41 @@
     >
       <el-table-column type="expand">
         <template slot-scope="props">
-          <el-form label-position="center" inline class="demo-table-expand">
+          <el-form label-position="center" inline class="demo-table-expand" v-show="props.row.status==='生效'">
               <el-table
                 :data="props.row.busList"
                 style="width: 100%">
-                  <el-table-column align="center" label="车牌" width="180">
+                  <el-table-column align="center" label="车牌" >
                     <template slot-scope="scope">
                       {{ scope.row.busNo }}
                     </template>
                   </el-table-column>
-                  <el-table-column align="center" label="车型" width="180">
+                  <el-table-column align="center" label="车型" >
                     <template slot-scope="scope">
                       {{ scope.row.busModel }}
                     </template>
                   </el-table-column>
-                  <el-table-column align="center" label="驾驶员" width="180">
+                  <el-table-column align="center" label="驾驶员" >
                     <template slot-scope="scope">
                       {{ scope.row.driver }}
                     </template>
                   </el-table-column>
-                  <el-table-column align="center" label="驾驶员手机" width="180">
+                  <el-table-column align="center" label="驾驶员手机" >
                     <template slot-scope="scope">
                       {{ scope.row.tel }}
                     </template>
                   </el-table-column>
-                  <el-table-column align="center" label="备注" width="180">
+                  <el-table-column align="center" label="车费" >
+                    <template slot-scope="scope">
+                      {{ scope.row.busCost }}
+                    </template>
+                  </el-table-column>
+                  <el-table-column align="center" label="备注" >
                     <template slot-scope="scope">
                       {{ scope.row.remark }}
                     </template>
                   </el-table-column>
-                  <el-table-column align="center" label="操作" width="90">
+                  <el-table-column align="center" label="操作" >
                     <template slot-scope="scope">
                      <el-button type="primary" size="mini" @click="handleCharge(scope.row.ordBusId)" >
                         记费
@@ -67,6 +75,11 @@
                   </el-table-column>
                 </el-table>
           </el-form>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="状态">
+        <template slot-scope="scope">
+          <el-tag>{{ scope.row.status }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column align="center" label="用车单位">
@@ -81,17 +94,28 @@
       </el-table-column>
       <el-table-column align="center" label="用车开始时间">
         <template slot-scope="scope">
-          <span>{{ scope.row.useBusStartTime | parseDate('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+          <span>{{ scope.row.useBusStartDate }}&nbsp;{{ scope.row.useBusStartTime }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="用车结束时间">
         <template slot-scope="scope">
-          <span>{{ scope.row.useBusEndTime | parseDate('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+          <span>{{ scope.row.useBusEndDate}}&nbsp;{{ scope.row.useBusEndTime}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="行程">
         <template slot-scope="scope">
           <span>{{ scope.row.route }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="费用">
+        <template slot-scope="scope">
+          <span>{{ scope.row.contractAmount }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="是否含费">
+        <template slot-scope="scope">
+          <span v-if="scope.row.containCost">是</span>
+          <span v-if="!scope.row.containCost">否</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="操作" width="150" class-name="small-padding fixed-width">
@@ -110,7 +134,7 @@
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="fetchData" />
   
     <el-dialog
-        title="添加【用车】费用111"
+        title="添加【用车】费用"
         :visible.sync="dialogVisible"
         width="50%"
         :before-close="handleClose">
@@ -152,12 +176,16 @@ export default {
         useBusCom: '',
         useBusContact: '',
         route: '',
+        useBusStartDate: null,
+        useBusEndDate: null,
         useBusStartTime: null,
-        useBusEndTime: null
+        useBusEndTime: null,
+        status: ''
       },
       dialogVisible: false,
       ordBusId: '',
-      costModel: 'order'
+      costModel: 'order',
+      statusList:[{ label:'预定'},{ label:'生效'}]
     }
   },
   created() {

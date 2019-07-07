@@ -34,6 +34,7 @@ Vue.filter('parseDate', function(value, fmt) {
   return parseTime(value, fmt)
 })
 
+
 new Vue({
   el: '#app',
   router,
