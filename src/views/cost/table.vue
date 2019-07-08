@@ -39,7 +39,7 @@
           {{ scope.row.busDomain.busNo }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="用车开始时间">
+      <el-table-column align="center" label="用车开始时间" width="320px">
         <template slot-scope="scope">
           {{ scope.row.useBusStartTime | parseDate('{y}-{m}-{d}') }}
         </template>

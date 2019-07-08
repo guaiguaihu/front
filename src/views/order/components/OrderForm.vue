@@ -8,7 +8,7 @@
         <el-row type="flex" justify="start" :gutter="10">
           <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
             <el-form-item label="用车开始时间">
-                <el-date-picker style="width:180px" v-model="form.useBusStartDate" type="date" value-format="yyyy-MM-dd" />
+                <el-date-picker style="width:180px"  v-model="form.useBusStartDate" type="date" value-format="yyyy-MM-dd" />
                 <el-time-select style="width:150px" v-model="form.useBusStartTime" :picker-options="{start: '00:00',step: '00:15',end: '24:00'}" />
             </el-form-item>
           </el-col>
@@ -49,6 +49,11 @@
                 <el-input   style="width:150px" v-model="form.remark" placeholder="请输入备注" type="textarea" />
             </el-form-item>
           </el-col>
+          <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+            <el-form-item label="是否含费">
+              <el-checkbox v-model="form.containCost" />
+            </el-form-item>
+          </el-col>
         </el-row>
         <el-row type="flex" justify="center">
           <el-form-item>
@@ -61,20 +66,6 @@
         <div slot="header" class="clearfix">
           <span>用车信息</span>
         </div> -->
-        <el-row type="flex" justify="start" :gutter="10">
-          <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
-            <el-form-item label="用车类型">
-                <el-select v-model="form.ordType">
-                  <el-option v-for="item in ordTypes" :key="item.key" :label="item.label" :value="item.key" />
-                </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
-            <el-form-item label="是否含费">
-              <el-checkbox v-model="form.containCost" />
-            </el-form-item>
-          </el-col>
-        </el-row>
         <el-row type="flex" justify="start" :gutter="10">
           <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
             <el-form-item label="上车点">

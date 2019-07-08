@@ -4,7 +4,7 @@
       <el-select v-model="listQuery.status" clearable placeholder="状态" style="width:80px;" class="filter-item" @keyup.enter.native="handleFilter">
         <el-option v-for="item in statusList" :key="item.label" :value="item.label" />
       </el-select>
-      <el-input v-model="listQuery.useBusCom" placeholder="用车单位" style="width: 100px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <!-- <el-input v-model="listQuery.useBusCom" placeholder="用车单位" style="width: 100px;" class="filter-item" @keyup.enter.native="handleFilter" /> -->
       <el-input v-model="listQuery.useBusContact" placeholder="用车单位联系人" style="width: 150px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-input v-model="listQuery.route" placeholder="行程" style="width: 150px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-date-picker type="datetime" v-model="listQuery.useBusStartTime" value-format="yyyy-MM-dd HH:mm:ss"  placeholder="开始时间" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
@@ -29,6 +29,7 @@
       border
       fit
       highlight-current-row
+      style="width: 100%"
     >
       <el-table-column type="expand">
         <template slot-scope="props">
@@ -77,42 +78,44 @@
           </el-form>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="状态">
+      <el-table-column align="center" label="状态" width="70">
         <template slot-scope="scope">
           <el-tag>{{ scope.row.status }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="用车单位">
+      <!-- <el-table-column align="center" label="用车单位">
         <template slot-scope="scope">
           {{ scope.row.useBusCom }}
         </template>
-      </el-table-column>
-      <el-table-column align="center" label="用车单位联系人">
+      </el-table-column> -->
+      <el-table-column align="center" label="用车单位联系人" width="100" :show-overflow-tooltip="true">
         <template slot-scope="scope">
           {{ scope.row.useBusContact }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="用车开始时间">
+      <el-table-column align="center" label="用车开始时间" width="150" >
         <template slot-scope="scope">
-          <span>{{ scope.row.useBusStartDate }}&nbsp;{{ scope.row.useBusStartTime }}</span>
+          <span>{{ scope.row.useBusStartDate }}&nbsp;</span>
+          <span v-if="scope.row.useBusStartTime != '00:00'">{{ scope.row.useBusStartTime }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="用车结束时间">
+      <el-table-column align="center" label="用车结束时间" width="150" >
         <template slot-scope="scope">
-          <span>{{ scope.row.useBusEndDate}}&nbsp;{{ scope.row.useBusEndTime}}</span>
+          <span>{{ scope.row.useBusEndDate}}&nbsp;</span>
+          <span v-if="scope.row.useBusEndTime != '00:00'">{{ scope.row.useBusEndTime }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="行程">
+      <el-table-column align="center" label="行程" :show-overflow-tooltip="true" >
         <template slot-scope="scope">
           <span>{{ scope.row.route }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="费用">
+      <el-table-column align="center" label="费用" width="65">
         <template slot-scope="scope">
           <span>{{ scope.row.contractAmount }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="是否含费">
+      <el-table-column align="center" label="是否含费" width="80">
         <template slot-scope="scope">
           <span v-if="scope.row.containCost">是</span>
           <span v-if="!scope.row.containCost">否</span>
