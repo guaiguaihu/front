@@ -110,7 +110,7 @@
           <span>{{ scope.row.route }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="费用" width="65">
+      <el-table-column align="center" label="车价" width="65">
         <template slot-scope="scope">
           <span>{{ scope.row.contractAmount }}</span>
         </template>

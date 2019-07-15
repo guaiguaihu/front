@@ -23,33 +23,34 @@
       border
       fit
       highlight-current-row
+      style="width: 100%"
     >
-      <el-table-column align="center" label="费用">
+      <el-table-column align="center" label="费用" width="80">
         <template slot-scope="scope">
           <el-tag>{{ scope.row.costName | costNameTypeFilter }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="金额">
+      <el-table-column align="center" label="金额" width="80">
         <template slot-scope="scope">
           {{ scope.row.costAmount }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="车牌">
+      <el-table-column align="center" label="车牌" width="70">
         <template slot-scope="scope">
           {{ scope.row.busDomain.busNo }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="用车开始时间" width="320px">
+      <el-table-column align="center" label="用车开始时间"  width="150">
         <template slot-scope="scope">
           {{ scope.row.useBusStartTime | parseDate('{y}-{m}-{d}') }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="用车结束时间">
+      <el-table-column align="center" label="用车结束时间"  width="150">
         <template slot-scope="scope">
           {{ scope.row.useBusEndTime | parseDate('{y}-{m}-{d}') }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="备注">
+      <el-table-column align="center" label="备注" :show-overflow-tooltip="true">
         <template slot-scope="scope">
           {{ scope.row.remark }}
         </template>

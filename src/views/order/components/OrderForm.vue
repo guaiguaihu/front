@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form ref="form" :model="form">
+    <el-form ref="form" :model="form" label-width="120px">
       <!-- <el-card class="box-card">
         <div slot="header" class="clearfix">
           <span>用车信息</span>
@@ -134,7 +134,7 @@
         </el-row>
         <el-row type="flex" justify="start" :gutter="10">
           <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
-            <el-form-item label="合同金额">
+            <el-form-item label="车价">
                 <el-input   style="width:150px" v-model="form.contractAmount" disabled />
             </el-form-item>
           </el-col>
