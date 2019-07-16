@@ -290,6 +290,9 @@ export default {
     initOrder(ordId) {
       getOrder(ordId).then(response => {
         this.form = response.data
+        if(!response.data.busList){
+          this.form.busList = []
+        }
       })
     },
     handleClose(done) {
